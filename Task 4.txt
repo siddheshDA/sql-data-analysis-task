@@ -1,0 +1,85 @@
+#query_for_all_city_findout_population_larger_than_100000_and_countrycode_should_be_'usa'
+
+select
+ *
+from
+ city
+where
+ population > 100000 and countrycode = 'USA'
+
+
+#count_no.of_city_population_>_100000
+select
+ count(id) as city_count
+from
+ city
+where
+ population > 100000
+
+
+#avg_population_in_all_cities_and_rounded_nearest_integer
+select
+ round(avg(population)) as avg_population
+from
+ city
+
+
+#sum_of_population_of_all_cities_where_continent='asia'
+select
+ sum(c.population) as total_population
+from
+ city as c
+join
+ country as cun
+on
+ c.countrycode = cun.code
+where
+ continent = 'Asia'
+order by 
+ 1 
+
+
+--- find out whose amount is > avg amount of all customers
+select
+ *
+from
+ payment
+where
+ amount > (select avg(amount)
+ from
+  payment )
+
+
+--- FIND MINIMUM AGE OF EMPLOYEES FROM EACH DEPARTMENT
+
+SELECT
+ DEPARTMENT,
+ MIN(AGE)
+FROM 
+ EMPLOYEE
+GROUP BY
+ 1
+ORDER BY 
+ 1 ASC
+
+
+
+CREATE INDEX MODE
+ON PAYMENT(MODE);
+
+--- Create an index on payment_method to speed up searches.
+
+SELECT * FROM PAYMENT
+WHERE MODE = 'Cash';
+
+
+
+CREATE VIEW high_value_transactions AS
+SELECT CUSTOMER_id, MODE, PAYMENT_date
+FROM PAYMENT
+WHERE amount > 50;
+
+
+-- Create a view for all transactions above 50 amount.
+
+SELECT * FROM high_value_transactions;
